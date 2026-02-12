@@ -1,0 +1,28 @@
+{
+  "name": "wealthfolio-gocardless-addon",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite build --watch",
+    "build": "tsc && vite build",
+    "bundle": "pnpm build && node scripts/bundle.js",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@tanstack/react-query": "^5.62.16",
+    "date-fns": "^4.1.0",
+    "lucide-react": "^0.469.0"
+  },
+  "devDependencies": {
+    "@anthropic/addon-sdk": "file:../wealthfolio/packages/addon-sdk",
+    "@types/react": "^19.0.2",
+    "@types/react-dom": "^19.0.2",
+    "rollup-plugin-external-globals": "^0.13.0",
+    "typescript": "~5.7.2",
+    "vite": "^6.0.5"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  }
+}

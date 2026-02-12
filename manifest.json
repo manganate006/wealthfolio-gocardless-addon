@@ -1,0 +1,36 @@
+{
+  "id": "gocardless-bank-sync",
+  "name": "GoCardless Bank Sync",
+  "version": "1.0.0",
+  "description": "Synchronize bank accounts and transactions via GoCardless Open Banking API",
+  "author": "Wealthfolio Community",
+  "sdk_version": "2.0.0",
+  "entry": "addon.js",
+  "permissions": [
+    "accounts:read",
+    "accounts:write",
+    "activities:read",
+    "activities:write",
+    "secrets:read",
+    "secrets:write",
+    "ui:sidebar",
+    "ui:settings",
+    "http:proxy"
+  ],
+  "settings_schema": {
+    "type": "object",
+    "properties": {
+      "syncInterval": {
+        "type": "number",
+        "title": "Sync Interval (minutes)",
+        "default": 60,
+        "minimum": 15
+      },
+      "autoSync": {
+        "type": "boolean",
+        "title": "Enable Auto Sync",
+        "default": false
+      }
+    }
+  }
+}
