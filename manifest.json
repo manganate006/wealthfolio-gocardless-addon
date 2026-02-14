@@ -4,33 +4,42 @@
   "version": "1.0.0",
   "description": "Synchronize bank accounts and transactions via GoCardless Open Banking API",
   "author": "Wealthfolio Community",
-  "sdk_version": "2.0.0",
-  "entry": "addon.js",
+  "license": "MIT",
+  "main": "addon.js",
+  "sdkVersion": "2.0.0",
+  "enabled": true,
   "permissions": [
-    "accounts:read",
-    "accounts:write",
-    "activities:read",
-    "activities:write",
-    "secrets:read",
-    "secrets:write",
-    "ui:sidebar",
-    "ui:settings",
-    "http:proxy"
-  ],
-  "settings_schema": {
-    "type": "object",
-    "properties": {
-      "syncInterval": {
-        "type": "number",
-        "title": "Sync Interval (minutes)",
-        "default": 60,
-        "minimum": 15
-      },
-      "autoSync": {
-        "type": "boolean",
-        "title": "Enable Auto Sync",
-        "default": false
-      }
+    {
+      "category": "accounts",
+      "functions": [
+        { "name": "getAll", "isDeclared": true, "isDetected": false }
+      ],
+      "purpose": "Link bank accounts to Wealthfolio accounts for transaction import"
+    },
+    {
+      "category": "activities",
+      "functions": [
+        { "name": "import", "isDeclared": true, "isDetected": false },
+        { "name": "checkImport", "isDeclared": true, "isDetected": false }
+      ],
+      "purpose": "Import bank transactions as deposits/withdrawals"
+    },
+    {
+      "category": "secrets",
+      "functions": [
+        { "name": "set", "isDeclared": true, "isDetected": false },
+        { "name": "get", "isDeclared": true, "isDetected": false },
+        { "name": "delete", "isDeclared": true, "isDetected": false }
+      ],
+      "purpose": "Securely store GoCardless API credentials and tokens"
+    },
+    {
+      "category": "ui",
+      "functions": [
+        { "name": "sidebar.addItem", "isDeclared": true, "isDetected": false },
+        { "name": "router.add", "isDeclared": true, "isDetected": false }
+      ],
+      "purpose": "Add navigation and routes for the addon"
     }
-  }
+  ]
 }
