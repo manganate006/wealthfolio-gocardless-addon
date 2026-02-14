@@ -1,6 +1,6 @@
 import React from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { Settings, Building2, CreditCard, RefreshCw } from 'lucide-react';
+import { Settings, Building2, CreditCard, RefreshCw, Bug } from 'lucide-react';
 import type { AddonContext } from './types/wealthfolio';
 
 // Create a QueryClient for the addon's React Query hooks
@@ -27,6 +27,7 @@ const SettingsPage = React.lazy(() => import('./pages/SettingsPage'));
 const BanksPage = React.lazy(() => import('./pages/BanksPage'));
 const AccountsPage = React.lazy(() => import('./pages/AccountsPage'));
 const SyncPage = React.lazy(() => import('./pages/SyncPage'));
+const DiagnosticPage = React.lazy(() => import('./pages/DiagnosticPage'));
 
 /**
  * GoCardless Bank Sync Addon for Wealthfolio
@@ -68,6 +69,13 @@ export default function enable(ctx: AddonContext) {
       route: '/addon/gocardless-bank/settings',
       icon: <Settings className="h-4 w-4" />,
       order: 103,
+    }),
+    ctx.sidebar.addItem({
+      id: 'gocardless-diagnostic',
+      label: 'Diagnostic',
+      route: '/addon/gocardless-bank/diagnostic',
+      icon: <Bug className="h-4 w-4" />,
+      order: 199,
     }),
   ];
 
@@ -125,6 +133,22 @@ export default function enable(ctx: AddonContext) {
           <WithQueryProvider>
             <React.Suspense fallback={<LoadingFallback />}>
               <SyncPage ctx={ctx} />
+            </React.Suspense>
+          </WithQueryProvider>
+        ),
+      })
+    ),
+  });
+
+  // Diagnostic page for troubleshooting
+  ctx.router.add({
+    path: '/addon/gocardless-bank/diagnostic',
+    component: React.lazy(() =>
+      Promise.resolve({
+        default: () => (
+          <WithQueryProvider>
+            <React.Suspense fallback={<LoadingFallback />}>
+              <DiagnosticPage ctx={ctx} />
             </React.Suspense>
           </WithQueryProvider>
         ),

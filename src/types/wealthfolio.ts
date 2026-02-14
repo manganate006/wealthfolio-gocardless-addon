@@ -149,13 +149,16 @@ export type ActivityType =
 export interface ActivityImport {
   accountId: string;
   activityType: ActivityType;
-  activityDate: string;
-  symbol?: string;
+  date: string;
+  symbol: string;
   quantity: number;
   unitPrice: number;
   currency: string;
-  fee?: number;
+  fee: number;
+  amount?: number;
   comment?: string;
+  isDraft: boolean;
+  isValid: boolean;
 }
 
 export interface ActivityFilters {

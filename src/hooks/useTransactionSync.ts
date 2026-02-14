@@ -71,10 +71,10 @@ export function useTransactionSync({ client, activitiesApi }: UseTransactionSync
         toDate
       );
 
-      // Get all transactions (booked + pending)
-      const allTransactions = [...transactions.booked];
+      // Get all transactions (booked + pending) with safety check
+      const allTransactions = transactions?.booked ? [...transactions.booked] : [];
       // Optionally include pending transactions
-      // allTransactions.push(...transactions.pending);
+      // if (transactions?.pending) allTransactions.push(...transactions.pending);
 
       setSyncProgress((prev) => ({
         ...prev,
@@ -94,7 +94,7 @@ export function useTransactionSync({ client, activitiesApi }: UseTransactionSync
       // Validate import
       const validation = await activitiesApi.checkImport(wealthfolioAccountId, activities);
 
-      if (!validation.valid && validation.errors.length > 0) {
+      if (!validation.valid && validation.errors && validation.errors.length > 0) {
         const errors = validation.errors.map((e) => e.message);
         throw new Error(`Validation failed: ${errors.join(', ')}`);
       }

@@ -18,8 +18,8 @@ export function mapTransactionToActivity(
   const activityType: ActivityType = amount > 0 ? 'DEPOSIT' : 'WITHDRAWAL';
 
   // Get the best available date
-  const activityDate = getTransactionDate(transaction);
-  if (!activityDate) return null;
+  const date = getTransactionDate(transaction);
+  if (!date) return null;
 
   // Build description from available fields
   const comment = buildTransactionComment(transaction);
@@ -27,12 +27,15 @@ export function mapTransactionToActivity(
   return {
     accountId: wealthfolioAccountId,
     activityType,
-    activityDate,
+    date,
+    symbol: '$CASH',
     quantity: 1,
     unitPrice: Math.abs(amount),
     currency,
     fee: 0,
     comment,
+    isDraft: false,
+    isValid: true,
   };
 }
 
