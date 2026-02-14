@@ -294,6 +294,22 @@ export function SettingsPage({ ctx }: SettingsPageProps) {
           <ExternalLink className="h-3 w-3" />
         </a>
       </div>
+
+      {/* Version Info */}
+      <div className="rounded-lg border bg-muted/30 p-4 text-xs text-muted-foreground">
+        <div className="flex flex-wrap gap-4">
+          <span>
+            <strong>Version:</strong> {__APP_VERSION__}
+          </span>
+          <span>
+            <strong>Commit:</strong>{' '}
+            <code className="bg-muted px-1 py-0.5 rounded">{__GIT_COMMIT__}</code>
+          </span>
+          <span>
+            <strong>Built:</strong> {new Date(__BUILD_TIME__).toLocaleString()}
+          </span>
+        </div>
+      </div>
     </div>
   );
 }

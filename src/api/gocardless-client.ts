@@ -306,6 +306,13 @@ export class GoCardlessClient {
     }
   }
 
+  async removeStoredRequisition(requisitionId: string): Promise<void> {
+    const stored = await this.getStoredRequisitions();
+    delete stored[requisitionId];
+    await this.secrets.set(SECRETS.REQUISITIONS, JSON.stringify(stored));
+    this.logger.info(`Removed stored requisition: ${requisitionId}`);
+  }
+
   // ============ Accounts API ============
 
   async getAccountDetails(accountId: string): Promise<AccountDetails> {
@@ -372,6 +379,21 @@ export class GoCardlessClient {
     delete linked[accountId];
     await this.secrets.set(SECRETS.LINKED_ACCOUNTS, JSON.stringify(linked));
     this.logger.info(`Unlinked bank account: ${accountId}`);
+  }
+
+  async linkAccount(accountId: string, institutionId: string): Promise<void> {
+    const linked = await this.getLinkedAccounts();
+    linked[accountId] = {
+      id: accountId,
+      institutionId,
+      created: new Date().toISOString(),
+      lastAccessed: new Date().toISOString(),
+      iban: '',
+      status: 'READY',
+      ownerName: '',
+    };
+    await this.secrets.set(SECRETS.LINKED_ACCOUNTS, JSON.stringify(linked));
+    this.logger.info(`Linked account: ${accountId}`);
   }
 
   async updateAccountMapping(
